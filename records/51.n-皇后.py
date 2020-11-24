@@ -8,25 +8,16 @@
 # @lc code=start
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        from copy import deepcopy
-        self.res = []
-        board = [['.' for _ in range(n)] for _ in range(n)]
+        board, self.ret = [['.'] * n for _ in range(n)], []
         self.backtrack(board, 0)
-        res = []
-        for row in self.res:
-            item = []
-            for col in row:
-                item.append(''.join(col))
-            res.append(item)
-        return res
+        return self.ret
 
     def backtrack(self, board, row):
         if row == len(board):
-            self.res.append(deepcopy(board))
+            self.ret.append([''.join(i) for i in board])
             return
 
-        size = len(board[row])
-        for col in range(size):
+        for col in range(len(board[row])):
             if not self.is_valid(board, row, col):
                 continue
             board[row][col] = 'Q'
