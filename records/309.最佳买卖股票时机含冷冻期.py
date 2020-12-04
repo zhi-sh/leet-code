@@ -10,18 +10,14 @@ class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         if not prices: return 0
         sz = len(prices)
-        ks = min(1000, len(prices) // 2 + 1)
-        dp = [[[0] * 2 for j in range(ks)] for i in range(sz)]
+        dp_i0 = 0
+        dp_i1 = -float('inf')
+        dp_pre_0 = 0
         for i in range(sz):
-            for k in range(ks - 1, 0, -1):
-                if i - 1 == -1:
-                    dp[i][k][0] = 0
-                    dp[i][k][1] = -prices[i]
-                    continue
-                dp[i][k][0] = max(dp[i - 1][k][0], dp[i - 1][k][1] + prices[i])
-                dp[i][k][1] = max(dp[i - 1][k][1],
-                                  dp[i - 2][k - 1][0] - prices[i])
-        return dp[sz - 1][ks - 1][0]
-
+            tmp = dp_i0
+            dp_i0 = max(dp_i0, dp_i1 + prices[i])
+            dp_i1 = max(dp_i1, dp_pre_0 - prices[i])
+            dp_pre_0 = tmp
+        return dp_i0
 
 # @lc code=end
