@@ -13,13 +13,13 @@ class Solution:
         nums.sort()
         n = len(nums)
         res = []
-        i = 0
         before = float('inf')
         for i in range(n):  # 确保第一个数字，不重复
             if before == nums[i]:
                 continue
             else:
                 before = nums[i]
+            
             tuples = self.twoSum(nums, i + 1, target - nums[i])
 
             for arr in tuples:
